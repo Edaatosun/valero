@@ -85,10 +85,10 @@ export default function Login() {
             }
           }
         } else {
-          navigation.navigate("Login"); // Eğer kullanıcı giriş yapmamışsa Login sayfasına yönlendir
+          
         }
       } else {
-        navigation.navigate("Login"); // Eğer session yoksa Login sayfasına yönlendir
+        
       }
     }
     checkLoginStatus();
@@ -235,8 +235,8 @@ export default function Login() {
 
       {/* Forgot Password */}
       <View className="w-full max-w-sm mt-5">
-        <TouchableOpacity>
-          <Text className="text-gray-600 opacity-50 text-right text-base">Şİfremi Unuttum?</Text>
+        <TouchableOpacity onPress={()=>{navigation.navigate("ForgotPassword")}}>
+          <Text className="text-gray-600 opacity-50 text-right text-base">Şifremi Unuttum?</Text>
         </TouchableOpacity>
       </View>
 

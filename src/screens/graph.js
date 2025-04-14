@@ -41,7 +41,7 @@ export default function Graph() {
           });
 
           const labels = last7Days.map((d) => format(d, 'dd MMM', { locale: tr }));
-
+          console.log("hey hey hey hey hey",dailyTotals);
           setDailyData({
             labels: labels,
             datasets: [
@@ -88,7 +88,7 @@ export default function Graph() {
   return (
     <View className='w-full h-full mt-5'>
       {/* Header */}
-      <View className="w-full flex-row items-center justify-between px-5 py-2 mt-5">
+      <View className="w-full flex-row items-center justify-between px-5 py-2 mt-7">
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={45} />
         </TouchableOpacity>

@@ -144,7 +144,7 @@ export default function AddCup() {
                                 />
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setSelectedCupml(Number(changeMl));
+                                        setSelectedCupml(parseInt(changeMl));
                                         setEditModalVisible(false);
                                     }}
                                     className="justify-center items-center rounded-xl w-full bg-blue-400 h-[50]"

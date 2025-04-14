@@ -13,6 +13,7 @@ import AllHistoryPage from '../screens/allHistoryPage';
 import AllMyCupPage from '../screens/allMyCupPage';
 import DetailsHistoryProgress from '../screens/detailsHistoryProgress';
 import Deneme from '../screens/deneme';
+import ForgotPassword from '../screens/forgotPassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ export default function Index() {
         <Stack.Screen name = "AllHistoryPage" component={AllHistoryPage}/>
         <Stack.Screen name='AllMyCupPage' component={AllMyCupPage}/>
         <Stack.Screen name='DetailsHistoryProgress' component={DetailsHistoryProgress}/>
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword}/>
 
       </Stack.Navigator>
 

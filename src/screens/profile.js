@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -132,6 +132,12 @@ export default function Profile() {
     </View>
   );
 
+  useEffect(() => {
+    if (user?.email) {
+      setNewEmail(user.email);
+    }
+  }, [user]);
+
   const handleEditUser = async () => {
     try {
       const firebaseUser = auth.currentUser;
@@ -258,7 +264,7 @@ export default function Profile() {
             <TextInput
               className="border-2 border-blue-500 bg-white rounded-lg px-4 py-3 w-full mb-4"
               placeholder="Email"
-              value={user.email}
+              value={newEmail}
               onChangeText={setNewEmail}
             />
             <TouchableOpacity
