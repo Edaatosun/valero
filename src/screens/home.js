@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, SafeAreaView, FlatList, Dimensions, Alert,Image } from "react-native";
+import { View, TouchableOpacity, Text, SafeAreaView, FlatList, Dimensions, Alert, Image, Platform } from "react-native";
 import ProgressCircle from "../components/progressCircle"
 import Icon from "react-native-vector-icons/Ionicons";
 import IconWater from "react-native-vector-icons/FontAwesome6"
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { LogBox } from 'react-native';
 import { auth } from "../../firebase";
-import { addItem, getItem, getLastAdd, queryGoalId, updateItem} from "../storage/database";
+import { addItem, getItem, getLastAdd, queryGoalId, updateItem } from "../storage/database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RightIcon from "react-native-vector-icons/AntDesign"
 import { ScrollView } from "react-native-gesture-handler";
@@ -26,15 +26,17 @@ export default function Home() {
   const [selectedCup, setSelectedCup] = useState({
     ml: 200,
     name: "Varsayılan Bardak",
-    uri: "https://firebasestorage.googleapis.com/v0/b/waterapp-cd21d.firebasestorage.app/o/waterCupImage%2F3.png?alt=media&token=3102e574-0235-44c4-8232-ed91354b21f4" 
+    uri: "https://firebasestorage.googleapis.com/v0/b/waterapp-cd21d.firebasestorage.app/o/waterCupImage%2F3.png?alt=media&token=3102e574-0235-44c4-8232-ed91354b21f4"
   }); //seçilen bardak (cup objesi) default olarak verildi. (buton içine yazılıyor.)
   const [isEqual, setIsEqual] = useState(false); // hedef ve amount değerleri eşit mi diye kontrol ediyor.
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // drink butonunun disabled ayarlıyor.
+ 
 
   // amount ve completed için sayfa başlangıcı önemli veriler.////////
   useFocusEffect(
     React.useCallback(() => {
       const fetchDataAndCheckGoalStatus = async () => {
+        console.log("yeniden yandı tüm ışıklarrrrrrrrrrrrrrrrrr");
         const lastGoal = await getLastAdd("Amount", userId); // bugünün hedefini al
         if (lastGoal) {
           setAmount(lastGoal.amount); // hedefi setstate et.
@@ -68,7 +70,7 @@ export default function Home() {
         const localCup = await AsyncStorage.getItem("localSelectedCup"); // seçilen cup değeri bunu localde tutuyoruz çünkü diğer taraftada setSelectedCup ı göndermek problem yaratıyor.
         if (localCup) {
           const selectedLocalCup = JSON.parse(localCup);
-          if(selectedLocalCup.user_id===userId){
+          if (selectedLocalCup.user_id === userId) {
             try {
               // Eğer veri doğru şekilde parse edildi ve ml değeri varsa
               if (selectedLocalCup && selectedLocalCup.ml) {
@@ -84,18 +86,19 @@ export default function Home() {
             }
 
           }
-         
+
         }
 
         // içilen miktarı alıp getiriyordu.
         const savedDrink = await AsyncStorage.getItem("savedDrink");
         if (savedDrink) {
           const localSavedDrink = JSON.parse(savedDrink);
-          if(localSavedDrink.userId===userId){
+          if (localSavedDrink.userId === userId) {
             console.log("kaydedildiiiiiiiiiiiiiiiii:", localSavedDrink);
-          setDrink(localSavedDrink.savedDrink);
-          console.log(localSavedDrink.savedDrink); // direkt olarak drink yazsaydık eğer 
-          // setState işlemleri asenkron çalışıyor eski değeri verebilir o yüzden güncel veriyi bu şekilde logluyoruz
+            setDrink(localSavedDrink.savedDrink);
+            console.log(localSavedDrink.savedDrink); // direkt olarak drink yazsaydık eğer 
+            // setState işlemleri asenkron çalışıyor eski değeri verebilir o yüzden güncel veriyi bu şekilde logluyoruz
+            console.log("saved drinkkkkkkkkkkkkkk",localSavedDrink.savedDrink)
           }
         }
         else {
@@ -122,10 +125,8 @@ export default function Home() {
   };
 
   const historyDrink = async () => {
-    console.log("fonkk girildiii..");
 
     const createdAt = getCurrentTime();
-    console.log(createdAt);
     const lastGoal = await getLastAdd("Amount", userId);
     console.log("Bugünkü hedefffff", lastGoal);
     console.log(lastGoal.goal_id);
@@ -141,11 +142,9 @@ export default function Home() {
   /// geçmişi listelemek için fonk.
   const historyList = async () => {
     const lastGoal = await getLastAdd("Amount", userId);
-    console.log(lastGoal.goal_id);
     const success = await queryGoalId("drinkWater", lastGoal.goal_id)
     if (success) {
       setHistoryObject(success);
-      console.log("Geçmiş veriler başarılı şekilde alındı:");
     }
 
   };
@@ -156,14 +155,32 @@ export default function Home() {
     //setDrink(prev => Math.min(prev + selectedCup, amount)); bu hatalı bir kod oldu çünkü
     // bu hemen çalışıyor ancak setDrink asenkron olduğu için hemen güncellenmiyor.
     // bu durumda, drink eski değerinde kalıyor.
-    const newDrink = Math.min(drink + selectedCup.ml, amount); // Maksimum amount aşılmamalı
-    setDrink(newDrink); // Yeni drink değerini state'e set et
-
-    // AsyncStorage'e yeni drink değerini kaydet
-    // burası toplam içilen mmiktar her su içe işlmeinde çalışıyor.
-    await AsyncStorage.setItem("savedDrink", JSON.stringify({ userId: userId, savedDrink: newDrink }));
+    console.log("drinkkkkkkkk ahndle drinkteki drinkkk", drink);
+    console.log("amounttttttttttttttt",amount);
+    console.log("selected mllllllll handle drinkteki selected ml",selectedCup.ml);
+    console.log(drink + selectedCup.ml),
+    console.log("hey hey hey",Math.min(drink + selectedCup.ml, amount));
+    if(drink=== null){
+      return;
+    }
+    else{
+      const newDrink = Math.min(drink + selectedCup.ml, amount); // Maksimum amount aşılmamalı
+      setDrink(newDrink); // Yeni drink değerini state'e set et
+  
+      // AsyncStorage'e yeni drink değerini kaydet
+      // burası toplam içilen mmiktar her su içe işlmeinde çalışıyor.
+      await AsyncStorage.setItem("savedDrink", JSON.stringify({ userId: userId, savedDrink: newDrink }));
+      
+      // Geçmişe kaydet
+      await historyDrink();
+      await historyList();
+    }
+   
+    
   };
-
+  useEffect(() => {
+    console.log("Güncel içilen miktar (drink):", drink);
+  }, [drink]);
 
   /////////////////////////
 
@@ -177,7 +194,7 @@ export default function Home() {
       const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
       const dayName = days[now.getDay()];
       const date = `${dayName} - ${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()} - ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-      console.log(date); //  "Perşembe - 28.03.2025 - 11:49"
+     //  "Perşembe - 28.03.2025 - 11:49"
       // Create DailyProgressModel with the drink amount
       const data = new DailyProgressModel(userId, lastGoal.goal_id, date, drink);
       const dailyProgressStored = await addItem("dailyProgressModel", data);
@@ -194,10 +211,8 @@ export default function Home() {
 
   return (
     <SafeAreaView className="bg-gray-100">
-
-
       {/* Üst Menü */}
-      <View className="w-full flex-row items-center justify-between px-5">
+      <View className={`w-full flex-row items-center justify-between px-5 ${Platform.OS === 'android' ? 'mt-10' : ''}`}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={45} />
         </TouchableOpacity>
@@ -206,7 +221,7 @@ export default function Home() {
       </View>
 
       {/* ilk card yapısı */}
-      <View className="justify-center items-center " >
+      <View className="justify-center items-center" >
         <View className="h-[380] w-[95%] bg-white rounded-xl items-center">
           <ProgressCircle drink={drink} amount={amount} />
 
@@ -223,7 +238,9 @@ export default function Home() {
 
 
             <TouchableOpacity
-              onPress={() => { handleDrink(); historyDrink(); historyList(); }}
+              onPress={async () => {
+                await handleDrink();     
+              }}
               className={`rounded-full py-2 px-16 ${isButtonDisabled ? 'bg-gray-400' : 'bg-blue-600'} items-center justify-center`}
               disabled={isButtonDisabled} // Butonun devre dışı bırakılmasını burada kontrol ediyoruz
             >

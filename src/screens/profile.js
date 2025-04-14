@@ -123,7 +123,7 @@ export default function Profile() {
   const InfoItem = ({ icon, label, value }) => (
     <View className="flex-row justify-between items-center bg-[#b6dcfa] p-3 rounded-xl mb-2">
       <View className="flex-row items-center">
-        <Icon name={icon} size={20} color="#0284c7" style={{ marginRight: 10 }} />
+        <Icon name={icon} size={20} color="#0284c7" className="mr-10" />
         <Text className="text-[#1e40af] font-medium">{label}</Text>
       </View>
       <Text className="text-[#0f172a] font-semibold max-w-[60%]" numberOfLines={1}>

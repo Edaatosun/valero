@@ -11,7 +11,7 @@ import Graph from "../screens/graph";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Image, Platform, SafeAreaView, Text, View } from "react-native";
 
 const Drawer = createDrawerNavigator();
 
@@ -88,7 +88,7 @@ const Content = (props) => {
   return (
     <SafeAreaView className="flex-1 bg-gray-200">
       <View className="bg-[#A5D3FF] items-center flex-1">
-        <Image className="mt-10 h-[140] w-[200]" source={require("../../assets/images/logo.png")}/>
+        <Image className={`h-[140] w-[200] ${Platform.OS === 'android' ? 'mt-5' : 'mt-10'}`} source={require("../../assets/images/logo.png")}/>
         <Text className="font-bold italic text-2xl">Velora</Text>
       </View>
       <View className="flex-[3] px-4 pt-6">

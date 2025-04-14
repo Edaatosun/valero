@@ -17,8 +17,6 @@ export async function addItem(collectionName, data) {
   let newObj = JSON.parse(string)
   try {
     const docRef = await addDoc(collection(db, collectionName),newObj);
-  
-    console.log("Document written with ID: ", docRef.id);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -82,10 +80,8 @@ export const getItem = async (collectionName, docNo) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Veri bulundu:", docSnap.data());
       return docSnap.data();
     } else {
-      console.log("Veri bulunamadı");
       return null;
     }
   } catch (error) {
@@ -103,8 +99,6 @@ export const getAllItems = async (collectionName) => {
       id: doc.id,
       ...doc.data()
     }));
-
-    console.log('Veriler:', items);
     return items;
   } catch (error) {
     console.error('Veri getirme hatası:', error);
@@ -174,7 +168,7 @@ export const getLastAdd = async (collectionName, userId) => {
     );
 
     const querySnapshot = await getDocs(q);
-    console.log("Sorgu sonucu:", querySnapshot);
+
 
     // Eğer sonuç boşsa null döndür
     if (querySnapshot.empty) {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Platform, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as Progress from 'react-native-progress';
@@ -107,7 +107,7 @@ export default function HistoryProgressPage() {
     return (
         <SafeAreaView className="bg-gray-100 flex-1">
             {/* Header */}
-            <View className="w-full flex-row items-center justify-between px-5 py-2">
+            <View className={`w-full flex-row items-center justify-between px-5 py-1 ${Platform.OS === 'android' ? 'mt-8' : ''}`}>
                 <TouchableOpacity onPress={() => navigation.openDrawer()}>
                     <Icon name="menu" size={45} />
                 </TouchableOpacity>

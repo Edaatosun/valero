@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Alert, FlatList, Image, Modal, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, FlatList, Image, Modal, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import EditIcon from "react-native-vector-icons/AntDesign";
 import { useState } from "react";
@@ -58,7 +58,7 @@ export default function AddCup() {
 
     return (
         <SafeAreaView className="h-full flex-1">
-            <View className="w-full flex-row items-center justify-between  px-5">
+            <View className={`w-full flex-row items-center justify-between  px-5 ${Platform.OS === 'android' ? 'mt-8 p-2' : ''}`}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Icon name="chevron-back-circle-outline" size={45} />
                 </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function AddCup() {
                                 />
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setSelectedCupml(changeMl);
+                                        setSelectedCupml(Number(changeMl));
                                         setEditModalVisible(false);
                                     }}
                                     className="justify-center items-center rounded-xl w-full bg-blue-400 h-[50]"

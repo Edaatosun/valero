@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity, View,Image } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity, View,Image, Platform } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome6"
 import { LogBox } from 'react-native';
 import { auth } from "../../firebase";
@@ -74,13 +74,10 @@ export function CupSelection() {
       fetchUserData();
     }, []);
 
-  useEffect(() => {
-    console.log("Updated cupOptions:", cupOptions);  // log the updated state
-  }, [cupOptions]); // this will run whenever cupOptions change
   return (
     <SafeAreaView className="flex-1 bg-white items-center">
       {/* Üst Menü */}
-      <View className="w-full flex-row items-center justify-between">
+        <View className={`flex-row w-full justify-between items-center ${Platform.OS === 'android' ? 'mt-10 p-1' : ''}`}>
         <TouchableOpacity onPress={() => navigation.navigate("Drawer")}>
           <IconBack name="chevron-back-circle-outline" size={45} />
         </TouchableOpacity>
@@ -103,7 +100,7 @@ export function CupSelection() {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() => { setMl(item.ml); setSelectedMl(item); navigation.goBack(); }}
+              onPress={() => { setMl(item.ml); setSelectedMl(item); navigation.navigate("Drawer"); }}
               className="w-[100] h-[120] p-3 border rounded-lg m-2 bg-[#E5F3F0] items-center justify-center">
              <Image
  source={{ uri: item.uri }}

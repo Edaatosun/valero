@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { SafeAreaView, Text, ScrollView, Image, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, ScrollView, Image, View, TouchableOpacity, Platform } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function DetailsHistoryProgress({ route }) {
@@ -11,7 +11,7 @@ export default function DetailsHistoryProgress({ route }) {
         <SafeAreaView className="bg-gray-100 flex-1">
 
             {/* Başlık kısmı */}
-            <View className='bg-white py-5 rounded-xl'>
+            <View className={`bg-white py-5 rounded-xl ${Platform.OS === 'android' ? 'mt-10' : ''}`}>
                 <View className=" flex-row w-full items-center justify-start">
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Icon name="chevron-back-circle-outline" size={40} />
@@ -43,7 +43,7 @@ export default function DetailsHistoryProgress({ route }) {
                                     <View className="flex-row items-center w-full min-h-[70] justify-between">
                                         <View className="flex-row items-center justify-center">
                                             <View className="w-[70] items-center justify-center">
-                                                <Image style={{ width: 40, height: 40 }} source={{ uri: item.Cup.url }} />
+                                                <Image style={{ width: 40, height: 40 }} source={{ uri: item.Cup.uri }} />
                                             </View>
                                             <View>
                                                 <Text className="text-lg font-bold">Water</Text>

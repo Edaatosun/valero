@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Image, Platform, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { fetchData } from "../storage/database";
 import { auth } from "../../firebase";
@@ -28,7 +28,7 @@ export default function AllMyCupPage() {
   return (
     <SafeAreaView className="w-full">
       {/* Başlık kısmı */}
-      <View className="flex-row w-full items-center justify-start">
+      <View className={`flex-row w-full items-center justify-start ${Platform.OS === 'android' ? 'mt-8 p-2' : ''}`}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="chevron-back-circle-outline" size={45} />
         </TouchableOpacity>

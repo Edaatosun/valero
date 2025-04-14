@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Image, Platform } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { auth } from "../../firebase";  // Firebase importu
 import { getLastAdd, queryGoalId } from "../storage/database";
@@ -41,8 +41,8 @@ export default function AllHistoryPage() {
 
     return (
         <SafeAreaView >
-            <View className="justify-center items-center">
-                <View className="w-[95%] bg-white h-full rounded-xl p-5 shadow-md pb-5">
+            <View className={`justify-center items-center ${Platform.OS === 'android' ? 'mt-10' : ''}`}>
+                <View className="w-[95%] bg-white h-full rounded-xl p-5 shadow-md pb-5 ">
                     {/* Başlık kısmı */}
                     <View className="flex-row w-full items-center justify-start">
                         <TouchableOpacity onPress={() => navigation.goBack()}>
