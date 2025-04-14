@@ -92,7 +92,7 @@ export default function Graph() {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={45} />
         </TouchableOpacity>
-        <Text className="text-xl font-bold">Velora</Text>
+        <Text className="text-2xl font-bold italic ">Velora</Text>
         <View className="w-[30px]" />
       </View>
 

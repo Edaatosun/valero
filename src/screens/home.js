@@ -216,7 +216,7 @@ export default function Home() {
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="menu" size={45} />
         </TouchableOpacity>
-        <Text className="text-lg font-bold">Water App</Text>
+        <Text className="text-2xl font-bold italic ">Velora</Text>
         <View style={{ width: 30 }} />
       </View>
 
