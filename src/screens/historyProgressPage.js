@@ -37,6 +37,7 @@ export default function HistoryProgressPage() {
             const getDailyProgress = async () => {
                 try {
                     const data = await fetchData("dailyProgressModel", userId);
+                    console.log(data);
                     const formattedData = await Promise.all(data.map(async (item) => {
                         try {
                             const AmountData = await queryGoalId("Amount", item.goal_id);
